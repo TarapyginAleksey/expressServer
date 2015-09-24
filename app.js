@@ -22,8 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', routes);
-app.use('/showError', showError);
+app.use('/showError', errorMiddleware, showError);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,6 +56,12 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+function errorMiddleware(req, res, next) {
+  var error = new Error('4tototo ta,aasfdsdf');
+  next(error);
+}
+
 
 
 module.exports = app;
